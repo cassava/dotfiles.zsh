@@ -1,0 +1,59 @@
+#!/bin/bash
+# If the note file exists, then show it every 120 minutes if possible.
+
+notefile="$HOME/NOTES"
+timespan=120
+
+if [ -z $XDG_RUNTIME_DIR ]; then
+    XDG_RUNTIME_DIR=/tmp
+fi
+
+remind_dir="$XDG_RUNTIME_DIR/remind"
+remind_timefile="$remind_dir/NOTES"
+lockfile="$XDG_RUNTIME_DIR/remind_me_notes.lock"
+
+# Options that can be specified on command line
+opt_force=0         # -f | --force
+
+progname=$(basename $0)
+while [ $# -gt 0 ]; do
+    case $1 in
+        -V|--version)
+            echo "$progname version 1.0"
+            exit 0;;
+        -f|--force)
+            opt_force=1
+            shift;;
+        *)
+            echo "Usage: $progname [-f]"
+            echo "$progname prints '$notefile' every $timespan minutes in the terminal."
+            echo "Note: If '$notefile' does not exist, nothing happens."
+            exit 1;;
+    esac
+done
+
+# Here we eliminate the race condition using locks. This is useful for when
+# two console windows are automatically started. The number 9 is the filehandle.
+(
+    flock -n 9 || exit 1
+
+    if [[ -f $notefile ]]; then
+        if [[ -d $remind_dir ]]; then
+            if [[ $opt_force -eq 1 ]]; then
+                rm -r $remind_dir
+                mkdir $remind_dir
+            fi
+        else
+            mkdir $remind_dir
+        fi
+
+        notes_diff=$(( ( $(date +"%s") - $(cat $remind_timefile 2>/dev/null || echo 0) ) / 60 ))
+        if [[ $notes_diff -gt $timespan ]]; then
+            cat $notefile
+            echo
+            date +"%s" > $remind_timefile
+        fi
+    fi
+) 9>$lockfile
+
+exit 0

@@ -1,0 +1,94 @@
+# /etc/zshrc or ~/.zshrc run with every interactive zsh instance (including login)
+
+#.
+#### Zsh configuration
+    HISTFILE="${HOME}/.zhistory"
+    HISTSIZE=1000
+    SAVEHIST=1000
+    export HISTFILE HISTSIZE SAVEHIST
+    setopt appendhistory autocd noextendedglob nomatch notify
+    unsetopt beep
+    bindkey -e
+
+    zstyle :compinstall filename "${HOME}/.zshrc"
+    zstyle ':completion:*' use-cache on
+    zstyle ':completion:*' cache-path ~/.zsh/cache
+
+    # When autocompleting with the vi command, don't suggest files I don't want
+    # to open: aux|bbl|bcf|blg|idx|ilg|ind|lof|lot|nlo|nls|out|run.xml|toc|log|pdf
+    # These endings come from latex projects.
+    zstyle ':completion:*:*:vi:*' file-patterns '^*.(aux|bbl|bcf|blg|fls|glo|idx|ilg|ind|lof|lot|nlo|nls|out|run.xml|toc|log|pdf):source-files' '*:all-files'
+
+    autoload -Uz compinit
+    compinit
+
+    envoy
+    source <(envoy -p)
+
+##.
+#### Variables
+# Set colors for ls
+    LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:ex=01;32:do=01;35:so=01;35:pi=01;35:bd=01;33:cd=01;33:or=01;31:mh=01;37:*.7z=00;31:*.Z=00;31:*.ace=00;31:*.arj=00;31:*.bz=00;31:*.bz2=00;31:*.cpio=00;31:*.deb=00;31:*.dz=00;31:*.gz=00;31:*.jar=00;31:*.lzh=00;31:*.lzma=00;31:*.rar=00;31:*.rpm=00;31:*.rz=00;31:*.svgz=00;31:*.tar=00;31:*.taz=00;31:*.tbz2=00;31:*.tgz=00;31:*.tz=00;31:*.xz=00;31:*.z=00;31:*.zip=00;31:*.zoo=00;31:*.asf=00;32:*.bmp=00;32:*.dl=00;32:*.flc=00;32:*.fli=00;32:*.gif=00;32:*.gl=00;32:*.ico=00;32:*.jpeg=00;32:*.jpg=00;32:*.mng=00;32:*.nuv=00;32:*.ogm=00;32:*.pbm=00;32:*.pcx=00;32:*.pgm=00;32:*.png=00;32:*.ppm=00;32:*.qt=00;32:*.rm=00;32:*.rmvb=00;32:*.svg=00;32:*.tga=00;32:*.tif=00;32:*.tiff=00;32:*.xbm=00;32:*.xcf=00;32:*.xpm=00;32:*.xwd=00;32:*.yuv=00;32:*.avi=00;35:*.dv=00;35:*.flv=00;35:*.m2v=00;35:*.m4v=00;35:*.mkv=00;35:*.mov=00;35:*.mp4v=00;35:*.mpeg=00;35:*.mpg=00;35:*.mp4=00;35:*.vob=00;35:*.webm=00;35:*.wmv=00;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.d=00;33:*.c=00;33:*.cc=00;33:*.cpp=00;33:*.cxx=00;33:*.i=00;33:*.ii=00;33:*.ipp=00;33:*.ixx=00;33:*.h=00;33:*.hh=00;33:*.hpp=00;33:*.hxx=00;33:*.py=00;33:*.sh=00;33:*.vim=00;33:*.hs=00;33:*.pl=00;33:*.go=00;33:*.a=03;34:*.ko=03;34:*.o=03;34:*.gch=03;34:*.so=03;34:*.pyc=03;34:*.pyo=03;34:*.s=03;34:*.zwc=03;34:*.html=00;33:*.htm=00;33:*.php=00;33:*.js=00;33:*.css=00;33:*.scss=00;33:*.inc=00;33:*.xml=00;33:*.sql=00;33:*.pgsql=00;33:*.tmp=03;37:*.temp=03;37:*.bak=03;37:*.swp=03;37:*.log=03;37:*.aux=03;37:*.out=03;37:*.pacnew=03;35:*.pacsave=03;38:';
+    export LS_COLORS
+
+
+###.
+#### Aliases
+
+    alias mux="tmuxinator"
+
+    # TODO: This is a temporary fix for systemctl while it has it's kdbus transition.
+    for sd_cmd in systemctl systemd-analyze systemd-run; do
+        alias $sd_cmd='DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/dbus/user_bus_socket" '$sd_cmd
+    done
+
+    alias R="R --no-save"
+    alias git="envoy-exec git"
+    alias cower="cower --ignorerepo=atlas"
+
+    alias sys="sudo systemctl"
+    alias sysu="systemctl --user"
+    alias sue="sudoedit"
+    alias quitx="sudo /usr/bin/systemctl isolate multi-user.target"
+
+    alias xclip="xclip -selection clipboard"
+    alias sel2clip="xsel -p | xsel -bi"
+    alias clip2sel="xsel -b | xsel -pi"
+
+    alias mplayer-snapshot="mplayer tv:// -tv driver=v4l2:device=/dev/video0 -vo png -frames 1"
+    alias wacom-touch-off='xsetwacom --set "Wacom Intuos PT S Finger touch" Touch off'
+    alias wacom-touch-on='xsetwacom --set "Wacom Intuos PT S Finger touch" Touch on'
+
+    # Filetype Aliases
+    alias -s jar="/usr/bin/java -jar"
+    alias -s pdf="/usr/bin/evince"
+    alias -s dvi="/usr/bin/evince"
+    alias -s hs="/usr/bin/vim"
+    alias -s tex="/usr/bin/vim"
+    alias -s mp3="/usr/bin/mpg123"
+    alias -s wav="/usr/bin/aplay"
+    alias -s ogg="/usr/bin/alsaplayer"
+    alias -s html="/usr/bin/chromium"
+
+    # Video files
+    alias -s flv="/usr/bin/mpv"
+    alias -s avi="/usr/bin/mpv"
+    alias -s mpg="/usr/bin/mpv"
+    alias -s mkv="/usr/bin/mpv"
+    alias -s mp4="/usr/bin/mpv"
+
+
+###.
+#### Functions
+    function aria2s() {
+        aria2c -s $1 -j $1 -x $1 $2
+    }
+
+    source <(jump --source)
+
+##.
+#### Autostart
+    # Not on Login...
+    if [[ ! -o login && $(id -u) -ne 0 ]]; then
+        remind_me_notes
+    fi
