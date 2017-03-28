@@ -188,6 +188,7 @@ MULTIHARDLINK 01;37
 .hxx  00;33
 .py   00;33
 .sh   00;33
+.bash 00;33
 .zsh  00;33
 .vim  00;33
 .hs   00;33
