@@ -1,0 +1,47 @@
+# ~/.zalias
+# vim: set ft=zsh:
+#
+# This file contains extra alias definitions for the interactive Zsh
+# and can be sourced by .zshrc
+
+alias mux="tmuxinator"
+
+# TODO: This is a temporary fix for systemctl while it has it's kdbus transition.
+for sd_cmd in systemctl systemd-analyze systemd-run; do
+alias $sd_cmd='DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/dbus/user_bus_socket" '$sd_cmd
+done
+
+alias R="R --no-save"
+alias git="envoy-exec git"
+alias cower="cower --ignorerepo=atlas"
+
+alias sys="sudo systemctl"
+alias sysu="systemctl --user"
+alias sue="sudoedit"
+alias quitx="sudo /usr/bin/systemctl isolate multi-user.target"
+
+alias xclip="xclip -selection clipboard"
+alias sel2clip="xsel -p | xsel -bi"
+alias clip2sel="xsel -b | xsel -pi"
+
+alias mplayer-snapshot="mplayer tv:// -tv driver=v4l2:device=/dev/video0 -vo png -frames 1"
+alias wacom-touch-off='xsetwacom --set "Wacom Intuos PT S Finger touch" Touch off'
+alias wacom-touch-on='xsetwacom --set "Wacom Intuos PT S Finger touch" Touch on'
+
+# Filetype Aliases
+alias -s jar="/usr/bin/java -jar"
+alias -s pdf="/usr/bin/evince"
+alias -s dvi="/usr/bin/evince"
+alias -s hs="/usr/bin/vim"
+alias -s tex="/usr/bin/vim"
+alias -s mp3="/usr/bin/mpg123"
+alias -s wav="/usr/bin/aplay"
+alias -s ogg="/usr/bin/alsaplayer"
+alias -s html="/usr/bin/chromium"
+
+# Video files
+alias -s flv="/usr/bin/mpv"
+alias -s avi="/usr/bin/mpv"
+alias -s mpg="/usr/bin/mpv"
+alias -s mkv="/usr/bin/mpv"
+alias -s mp4="/usr/bin/mpv"
