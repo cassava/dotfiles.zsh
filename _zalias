@@ -12,10 +12,11 @@ alias pacman='pacman --color=auto'
 alias du='du -h'
 alias df='df -h'
 
-alias cp='nocorrect cp'         # no spelling correction on cp
-alias mkdir='nocorrect mkdir'   # no spelling correction on mkdir
-alias mv='nocorrect mv'         # no spelling correction on mv
-alias rm='nocorrect rm'         # no spelling correction on rm
+# no spelling correction for important commands
+alias cp='nocorrect cp'
+alias mkdir='nocorrect mkdir -p'
+alias mv='nocorrect mv'
+alias rm='nocorrect rm'
 
 alias R="R --no-save"
 alias git="envoy-exec git"
