@@ -1,21 +1,259 @@
-# /etc/zshrc or ~/.zshrc run with every interactive zsh instance (including login)
-# vim: set ft=zsh:
+# /etc/zshrc or ~/.zshrc run with every interactive zsh instance
+# vim: set ft=zsh fdm=marker:
 
-HISTFILE="${HOME}/.zhistory"
-HISTSIZE=1000
-SAVEHIST=1000
-export HISTFILE HISTSIZE SAVEHIST
-setopt appendhistory autocd noextendedglob nomatch notify
-unsetopt beep
+# Z Shell Configuration {{{1
+# ---------------------------------------------------------------------------
+setopt append_history       # append history list to the history file
+                            #  (important for multiple parallel zsh sessions!)
+setopt share_history        # import new commands from the history file also in other zsh-session
+setopt histignorealldups    # if a new command line being added to the history list
+                            #  duplicates an older one, the older command is removed from the list
+setopt histignorespace      # remove command lines from the history list when
+                            #  the first character on the line is a space
+setopt auto_cd              # if a command is issued that can't be executed as a normal command,
+                            #  and the command is the name of a directory,
+                            #  perform the cd command to that directory
+setopt noauto_pushd         # make cd push the old directory onto the directory stack.
+setopt noextended_glob      # in order to use #, ~ and ^ for filename generation
+                            #  grep word *~(*.gz|*.bz|*.bz2|*.zip|*.Z) ->
+                            #  -> searches for word not in compressed files
+                            #  don't forget to quote '^', '~' and '#'!
+setopt noglobdots           # * shouldn't match dotfiles. ever.
+setopt longlistjobs         # display PID when suspending processes as well
+setopt notify               # report the status of backgrounds jobs immediately
+setopt hash_list_all        # whenever an autocompletion is attempted, hash everything first
+setopt completeinword       # not just at the end
+setopt nohup                # and don't kill them, either
+setopt nonomatch            # try to avoid the 'zsh: no matches found...'
+setopt nobeep               # avoid "beep"ing
+setopt pushd_ignore_dups    # don't push the same dir twice.
+setopt noshwordsplit        # use zsh style word splitting
+setopt unset                # don't error out when unset parameters are used
+setopt nocorrect            # don't correct spellin errors please
+
+# Environment Variables {{{1
+# ---------------------------------------------------------------------------
+export EDITOR=vim
+export PAGER=less
+export SHELL='/bin/zsh'
+export MAIL="/var/mail/$USER"
+export MAILCHECK=30
+# Report about cpu-/system-/user-time of command if running longer than
+# 60 seconds:
+export REPORTTIME=60
+export HISTFILE="${HOME}/.zhistory"
+export HISTSIZE=1000
+export SAVEHIST=5000
+export DIRSTACKSIZE=20
+export DIRSTACKFILE=$HOME/.zdirstack
+
+# Prompt {{{1
+# ---------------------------------------------------------------------------
+autoload promptinit
+promptinit
+
+setopt prompt_subst
+setopt transient_rprompt
+
+# set colors for use in prompts
+if autoload colors && colors 2>/dev/null ; then
+    BLUE="%{${fg[blue]}%}"
+    RED="%{${fg_bold[red]}%}"
+    GREEN="%{${fg[green]}%}"
+    CYAN="%{${fg[cyan]}%}"
+    MAGENTA="%{${fg[magenta]}%}"
+    YELLOW="%{${fg[yellow]}%}"
+    WHITE="%{${fg[white]}%}"
+    NO_COLOUR="%{${reset_color}%}"
+else
+    BLUE=$'%{\e[1;34m%}'
+    RED=$'%{\e[1;31m%}'
+    GREEN=$'%{\e[1;32m%}'
+    CYAN=$'%{\e[1;36m%}'
+    WHITE=$'%{\e[1;37m%}'
+    MAGENTA=$'%{\e[1;35m%}'
+    YELLOW=$'%{\e[1;33m%}'
+    NO_COLOUR=$'%{\e[0m%}'
+fi
+
+# set up the prompt
+EXITCODE="%(?..%?%1v )"
+PS2='\`%_> '      # secondary prompt, when the shell needs more info to complete a command.
+PS3='?# '         # selection prompt used within a select loop.
+PS4='+%N:%i:%_> ' # the execution trace prompt (setopt xtrace). default: '+%N:%i>'
+
+PROMPT="${RED}${EXITCODE}${BLUE}%n${NO_COLOUR}@%m %12<...<%B%~%b%<< %# "
+
+# clean up the colors
+for color in BLUE RED GREEN CYAN YELLOW MAGENTA WHITE ; unset $color
+
+# Keybindings {{{1
+# ---------------------------------------------------------------------------
 bindkey -e
 
+# key bindings
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+bindkey "\e[5~" beginning-of-history
+bindkey "\e[6~" end-of-history
+bindkey "\e[3~" delete-char
+bindkey "\e[2~" quoted-insert
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+bindkey "\eOd" emacs-backward-word
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+bindkey "^H" backward-delete-word
+# for rxvt
+bindkey "\e[8~" end-of-line
+bindkey "\e[7~" beginning-of-line
+# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+# for freebsd console
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+# completion in the middle of a line
+bindkey '^i' expand-or-complete-prefix
+# up and down do history search
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+
+# Autocompletion {{{1
+# ---------------------------------------------------------------------------
 zstyle :compinstall filename "${HOME}/.zshrc"
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zcache
 
+# allow one error for every three characters typed in approximate completer
+zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
+
+# don't complete backup files as executables
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
+
+# start menu completion only if it could find no unambiguous initial string
+zstyle ':completion:*:correct:*'       insert-unambiguous true
+zstyle ':completion:*:corrections'     format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*:correct:*'       original true
+
+# activate color-completion
+zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
+
+# format on completion
+zstyle ':completion:*:descriptions'    format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+
+# complete 'cd -<tab>' with menu
+zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+
+# insert all expansions for expand completer
+zstyle ':completion:*:expand:*'        tag-order all-expansions
+zstyle ':completion:*:history-words'   list false
+
+# activate menu
+zstyle ':completion:*:history-words'   menu yes
+
+# ignore duplicate entries
+zstyle ':completion:*:history-words'   remove-all-dups yes
+zstyle ':completion:*:history-words'   stop yes
+
+# match uppercase from lowercase
+zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
+
+# separate matches into groups
+zstyle ':completion:*:matches'         group 'yes'
+zstyle ':completion:*'                 group-name ''
+
+if [[ "$NOMENU" -eq 0 ]] ; then
+    # if there are more than 5 options allow selecting from a menu
+    zstyle ':completion:*'               menu select=5
+else
+    # don't use any menus at all
+    setopt no_auto_menu
+fi
+
+zstyle ':completion:*:messages'        format '%d'
+zstyle ':completion:*:options'         auto-description '%d'
+
+# describe options in full
+zstyle ':completion:*:options'         description 'yes'
+
+# on processes completion complete all user processes
+zstyle ':completion:*:processes'       command 'ps -au$USER'
+
+# offer indexes before parameters in subscripts
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# provide verbose completion information
+zstyle ':completion:*'                 verbose true
+
+# recent (as of Dec 2007) zsh versions are able to provide descriptions
+# for commands (read: 1st word in the line) that it will list for the user
+# to choose from. The following disables that, because it's not exactly fast.
+zstyle ':completion:*:-command-:*:'    verbose false
+
+# set format for warnings
+zstyle ':completion:*:warnings'        format $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
+
+# define files to ignore for zcompile
+zstyle ':completion:*:*:zcompile:*'    ignored-patterns '(*~|*.zwc)'
+zstyle ':completion:correct:'          prompt 'correct to: %e'
+
+# Ignore completion functions for commands you don't have:
+zstyle ':completion::(^approximate*):*:functions' ignored-patterns '_*'
+
+# Provide more processes in completion of programs like killall:
+zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+
+# complete manual by their section
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
+
+# provide .. as a completion
+zstyle ':completion:*' special-dirs ..
+
+# run rehash on completion so new installed program are found automatically:
+_force_rehash() {
+    (( CURRENT == 1 )) && rehash
+    return 1
+}
+
+zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete _files _ignored
+setopt nocorrect
+
+# caching
+[[ -d $ZSHDIR/cache ]] && zstyle ':completion:*' use-cache yes && \
+                        zstyle ':completion::complete:*' cache-path $ZSHDIR/cache/
+
+# host completion /* add brackets as vim can't parse zsh's complex cmdlines 8-) {{{ */
+if true ; then
+    [[ -r ~/.ssh/known_hosts ]] \
+        && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) \
+        || _ssh_hosts=()
+    [[ -r /etc/hosts ]] \
+        && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} \
+        || _etc_hosts=()
+else
+    _ssh_hosts=()
+    _etc_hosts=()
+fi
+hosts=(
+    $(hostname)
+    "$_ssh_hosts[@]"
+    "$_etc_hosts[@]"
+    grml.org
+    localhost
+)
+zstyle ':completion:*:hosts' hosts $hosts
+
+zstyle ':completion:*' accept-exact '*(N)'
+
 autoload -Uz compinit
 compinit
 
+# Final Actions {{{1
+# ---------------------------------------------------------------------------
 test -f ~/.dircolors && eval "$(dircolors ~/.dircolors)"
 
 if [[ -d ~/.zdir ]]; then
