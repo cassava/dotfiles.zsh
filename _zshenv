@@ -1,9 +1,18 @@
 # /etc/zshenv or ~/.zshenv run with every zsh instance
+# vim: set ft=zsh:
 
-DE=xfce
-BROWSER=chrome
-GOPATH=~/lang/go
-CLASSPATH=.:..
-PATH=$PATH:$GOPATH/bin:~/.local/sbin:~/.local/bin:~/.cargo/bin:~/.gem/ruby/2.3.0/bin:~/.cabal/bin
+DE="xfce"
+BROWSER="chrome"
+PATH="$PATH:$HOME/.local/bin:$HOME/.local/sbin"
 
-export DE BROWSER GOPATH CLASSPATH PATH
+# Go
+GOPATH="$HOME/lang/go"
+PATH="$PATH:$GOPATH/bin"
+
+# Rust
+PATH="$PATH:$HOME/.cargo/bin"
+
+# Ruby
+PATH="$PATH:$HOME/.gem/ruby/2.3.0/bin:"
+
+export DE BROWSER GOPATH PATH

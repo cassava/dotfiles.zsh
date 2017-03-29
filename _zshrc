@@ -1,4 +1,5 @@
 # /etc/zshrc or ~/.zshrc run with every interactive zsh instance (including login)
+# vim: set ft=zsh:
 
 HISTFILE="${HOME}/.zhistory"
 HISTSIZE=1000
