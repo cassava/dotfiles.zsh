@@ -196,6 +196,7 @@ MULTIHARDLINK 01;37
 .hs   00;33
 .pl   00;33
 .go   00;33
+.tex  00;33
 
 # objects
 .a    03;34
