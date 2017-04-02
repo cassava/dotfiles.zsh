@@ -160,6 +160,7 @@ MULTIHARDLINK 01;37
 .wmv  00;35
 
 # audio
+.aax  00;36
 .aac  00;36
 .au   00;36
 .flac 00;36
@@ -167,6 +168,7 @@ MULTIHARDLINK 01;37
 .midi 00;36
 .mka  00;36
 .mp3  00;36
+.m4b  00;36
 .mpc  00;36
 .ogg  00;36
 .ra   00;36
