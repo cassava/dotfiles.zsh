@@ -23,9 +23,8 @@ alias mkdir='nocorrect mkdir -p'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
+# Program replacements
 alias R="R --no-save"
-alias git="envoy-exec git"
-alias cower="cower --ignorerepo=atlas"
 alias xclip="xclip -selection clipboard"
 
 # Filetype Aliases
@@ -46,8 +45,9 @@ alias -s mpg="/usr/bin/mpv"
 alias -s mkv="/usr/bin/mpv"
 alias -s mp4="/usr/bin/mpv"
 
+# Additional aliases
 alias mux="tmuxinator"
-
 alias sys="sudo systemctl"
 alias sysu="systemctl --user"
 alias sue="sudoedit"
+
