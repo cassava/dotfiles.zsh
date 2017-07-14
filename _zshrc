@@ -130,5 +130,3 @@ if [[ -d ~/.zdir ]]; then
         source "$file"
     done
 fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
