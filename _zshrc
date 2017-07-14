@@ -127,6 +127,11 @@ compinit -d ~/.zcompdump
 [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 if [[ -d ~/.zdir ]]; then
     for file in ~/.zdir/*.zsh; do
-        source "$file"
+        [[ -f "$file" ]] && source "$file"
     done
+    if [[ -d "~/.zdir/+$(hostname)" ]]; then
+        for file in ~/.zdir/+$(hostname)/*.zsh; do
+            [[ -f "$file" ]] && source "$file"
+        done
+    fi
 fi
