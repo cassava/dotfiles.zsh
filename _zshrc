@@ -125,6 +125,7 @@ compinit -d ~/.zcompdump
 # Sourcing External {{{1
 [[ -f ~/.zalias ]] && source ~/.zalias
 [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 if [[ -d ~/.zdir ]]; then
     for file in ~/.zdir/*.zsh; do
         [[ -f "$file" ]] && source "$file"
