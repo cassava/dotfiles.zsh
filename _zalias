@@ -22,6 +22,7 @@ alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir -p'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
+alias nvim-config='nvim ~/.config/nvim/init.vim'
 
 # Program replacements
 alias R="R --no-save"

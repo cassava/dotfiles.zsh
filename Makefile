@@ -8,3 +8,7 @@ link:
 	ln -sir _zdir -T ~/.zdir
 	ln -sir _zprofile -T ~/.zprofile
 	ln -sir _zshrc -T ~/.zshrc
+
+.PHONY: install-deps-archlinux
+install-deps-archlinux:
+	sudo pacman -Sy fd-rs fasd ripgrep zsh zsh-completions
