@@ -2,7 +2,7 @@
 # vim: set ft=zsh:
 
 export DE="xfce"
-export BROWSER="chrome"
+export BROWSER="firefox-developer"
 export EDITOR="nvim"
 export LANG="en_US.UTF-8"
 export PATH="$PATH:$HOME/.local/bin:$HOME/.local/sbin"
