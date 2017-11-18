@@ -37,7 +37,7 @@ alias -s tex="/usr/bin/vim"
 alias -s mp3="/usr/bin/mpg123"
 alias -s wav="/usr/bin/aplay"
 alias -s ogg="/usr/bin/alsaplayer"
-alias -s html="/usr/bin/chromium"
+alias -s html="/usr/bin/firefox-developer"
 
 # Video files
 alias -s flv="/usr/bin/mpv"
