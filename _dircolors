@@ -195,6 +195,7 @@ MULTIHARDLINK 01;37
 .vim  00;33
 .hs   00;33
 .pl   00;33
+.rs   00;33
 .go   00;33
 .tex  00;33
 
