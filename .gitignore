@@ -1,0 +1,11 @@
+# Vim
+.netrwhist
+_config/nvim/undo/
+
+# Ansible
+*.retry
+
+# Vagrant
+.vagrant/
+*.log
+/.gtm/
