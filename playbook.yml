@@ -50,6 +50,7 @@
         - name: fasd | Add repository
           apt_repository:
             repo: ppa:aacebedo/fasd
+          when: ansible_distribution_release != "bionic"
 
         - name: Update cache
           apt:
