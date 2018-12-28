@@ -118,6 +118,11 @@ export DIRSTACKFILE=$HOME/.zdirstack
 
 bindkey -e
 
+# Let me edit a command in my $EDITOR:
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 # Completions {{{1
 zstyle ':completion:*' use-cache true
 autoload -U compinit
