@@ -21,7 +21,6 @@ zplug 'Tarrasch/zsh-autoenv'
 zplug 'djui/alias-tips'
 
 zplug 'supercrabtree/k'
-alias k="k -h"
 
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-autosuggestions'
