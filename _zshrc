@@ -1,6 +1,8 @@
 # ~/.zshrc is loaded after ~/.zshenv and /etc/zshrc
 # vim: set ft=zsh fdm=marker:
 
+PURE_PROMPT_SYMBOL=''
+
 # Plugins {{{1
 if [[ ! -d ~/.zplug ]]; then
     git clone https://github.com/zplug/zplug ~/.zplug
