@@ -4,6 +4,7 @@
 export DE="xfce"
 export BROWSER="firefox"
 export EDITOR="nvim"
+export TERMINAL="alacritty"
 export LANG="en_US.UTF-8"
 export PATH="$PATH:$HOME/.local/bin:$HOME/.local/sbin"
 
