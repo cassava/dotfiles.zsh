@@ -10,7 +10,9 @@ export PATH="$PATH:$HOME/.local/bin:$HOME/.local/sbin"
 
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+if command -v rustc >/dev/null; then
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 
 # Go
 export GOPATH="$HOME/lang/go"
