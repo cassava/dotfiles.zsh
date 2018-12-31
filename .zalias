@@ -27,6 +27,7 @@ alias nvim-config='nvim ~/.config/nvim/init.vim'
 # Program replacements
 alias R="R --no-save"
 alias xclip="xclip -selection clipboard"
+alias vat="vcsh"
 
 # Filetype Aliases
 alias -s jar="/usr/bin/java -jar"
@@ -51,4 +52,3 @@ alias mux="tmuxinator"
 alias sys="sudo systemctl"
 alias sysu="systemctl --user"
 alias sue="sudoedit"
-
