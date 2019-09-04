@@ -14,11 +14,17 @@ unsetopt BG_NICE
 #zmodload zsh/zprof
 
 # Plugins {{{1
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug
-    source ~/.zplug/init.zsh && zplug --self-manage
+ZPLUG_HOME=~/.local/opt/zplug
+ZPLUG_USE_CACHE=true
+ZPLUG_CACHE_DIR=~/.cache/zplug
+ZPLUG_INSTALL_NOW=false
+
+if [[ ! -d $ZPLUG_HOME ]]; then
+    mkdir -p $(dirname $ZPLUG_HOME)
+    git clone https://github.com/zplug/zplug $ZPLUG_HOME
+    ZPLUG_INSTALL_NOW=true
 fi
-source ~/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 
 # zplug should manage itself
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
@@ -41,16 +47,19 @@ zplug 'zsh-users/zsh-history-substring-search'
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
+if [[ $ZPLUG_INSTALL_NOW == true ]]; then
+    # Install plugins if there are plugins that have not been installed
+    if ! zplug check --verbose; then
+        printf "Install? [y/N]: "
+        if read -q; then
+            echo; zplug install
+        fi
     fi
 fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
+unset ZPLUG_INSTALL_NOW
 
 # Options {{{1
 
