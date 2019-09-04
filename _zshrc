@@ -37,6 +37,8 @@ zplug 'Tarrasch/zsh-autoenv'
 zplug 'djui/alias-tips'
 
 zplug 'supercrabtree/k'
+alias k="k -h"
+
 zplug 'wfxr/forgit'
 
 zplug 'zsh-users/zsh-completions'
@@ -44,8 +46,6 @@ zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 
 zplug 'zsh-users/zsh-history-substring-search'
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 
 if [[ $ZPLUG_INSTALL_NOW == true ]]; then
     # Install plugins if there are plugins that have not been installed
@@ -63,7 +63,7 @@ unset ZPLUG_INSTALL_NOW
 
 # Options {{{1
 
-# no c-s/c-q output freezing (it's usually unintentional)
+# no c-s/c-q output freezing
 setopt noflowcontrol
 # allow expansion in prompts
 setopt prompt_subst
@@ -106,9 +106,6 @@ setopt histignorealldups
 # remove command lines from the history list when the first character on the
 # line is a space
 setopt histignorespace
-# if a command is issued that can't be executed as a normal command, and the
-# command is the name of a directory, perform the cd command to that directory.
-setopt auto_cd
 
 # Don't send SIGHUP to background processes when the shell exits.
 setopt nohup
@@ -136,12 +133,16 @@ export DIRSTACKFILE=$HOME/.zdirstack
 
 # Keybindings {{{1
 
+# Emacs
 bindkey -e
 
-# Let me edit a command in my $EDITOR:
+# Let me edit a command in my $EDITOR, as in bash:
 autoload -z edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # Completions {{{1
 zstyle ':completion:*' use-cache true
