@@ -168,11 +168,13 @@ MULTIHARDLINK 01;37
 .midi 00;36
 .mka  00;36
 .mp3  00;36
+.m4a  00;36
 .m4b  00;36
 .mpc  00;36
 .ogg  00;36
 .ra   00;36
 .wav  00;36
+.opus 00;36
 
 # source code
 .d    00;33
