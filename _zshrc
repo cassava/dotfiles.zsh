@@ -2,6 +2,16 @@
 # vim: set ft=zsh fdm=marker:
 
 PURE_PROMPT_SYMBOL=''
+if [[ ! -z "$SSH_CLIENT" ]]; then
+    PURE_PROMPT_SYMBOL='$'
+fi
+
+# Bugfixes {{{1
+
+unsetopt BG_NICE
+
+# Uncomment this line to enable profiling:
+#zmodload zsh/zprof
 
 # Plugins {{{1
 if [[ ! -d ~/.zplug ]]; then
