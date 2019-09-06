@@ -1,0 +1,46 @@
+- defaults:
+    link:
+      relink: true
+
+- clean:
+    - ~/
+    - ~/.local/bin/
+
+- link:
+    ~/.dircolors: _dircolors
+    ~/.inputrc: _inputrc
+    ~/.profile: _profile
+    ~/.tmux.conf: _tmux.conf
+    ~/.zalias: _zalias
+    ~/.zprofile: _zprofile
+    ~/.zshrc: _zshrc
+    ~/.zdir/:
+      path: _zdir/*
+      glob: true
+      create: true
+    ~/.local/bin/:
+      path: _local/bin/*
+      glob: true
+      create: true
+
+- shell:
+    - "false"
+    - description: Install packages
+      command: >
+        test -f /usr/bin/pacman &&
+        sudo pacman -Sy --needed \
+          fasd \
+          fd \
+          git \
+          glances \
+          mc \
+          ripgrep \
+          the_silver_searcher \
+          tmate \
+          tmux \
+          tree \
+          zsh
+      stdin: true
+      stdout: true
+      stderr: true
+
