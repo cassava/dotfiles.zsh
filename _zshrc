@@ -2,7 +2,7 @@
 # vim: set ft=zsh fdm=marker:
 
 PURE_PROMPT_SYMBOL=''
-if [[ ! -z "$SSH_CLIENT" ]]; then
+if [[ ! -z "$SSH_CLIENT" || ! -z "$SSH_CONNECTION" ]]; then
     PURE_PROMPT_SYMBOL='$'
 fi
 
