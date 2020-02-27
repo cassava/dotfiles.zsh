@@ -37,7 +37,6 @@ zplug 'Tarrasch/zsh-autoenv'
 zplug 'djui/alias-tips'
 
 zplug 'supercrabtree/k'
-alias k="k -h"
 
 zplug 'wfxr/forgit'
 
