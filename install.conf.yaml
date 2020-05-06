@@ -33,6 +33,7 @@
           fd \
           git \
           glances \
+          inetutils \
           mc \
           ripgrep \
           the_silver_searcher \
