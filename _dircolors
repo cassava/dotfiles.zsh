@@ -4,6 +4,8 @@
 #
 
 TERM Eterm
+TERM alacritty
+TERM alacritty-256color
 TERM ansi
 TERM color-xterm
 TERM con132x25
