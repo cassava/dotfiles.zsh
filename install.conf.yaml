@@ -5,6 +5,7 @@
 - clean:
     - ~/
     - ~/.local/bin/
+    - ~/.config/
 
 - link:
     ~/.dircolors: _dircolors
@@ -16,6 +17,10 @@
     ~/.zshrc: _zshrc
     ~/.zdir/:
       path: _zdir/*
+      glob: true
+      create: true
+    ~/.config/:
+      path: _config/*
       glob: true
       create: true
     ~/.local/bin/:
@@ -67,6 +72,14 @@
         tmux                    \
         zsh                     \
       || true
+    stdin: true
+    stdout: true
+    stderr: true
+
+# Check that locales are available
+- shell:
+  - description: Assert all locales are available
+    command: _local/bin/check-locales --generate --auto-fix
     stdin: true
     stdout: true
     stderr: true
