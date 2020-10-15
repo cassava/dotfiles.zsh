@@ -6,9 +6,9 @@
 #   zmodload zsh/zprof
 #
 
-ZSH_USER_ZALIASES="~/.zalias"
-ZSH_USER_ZDIR="~/.zdir"
-ZSH_HOST_ZDIR="~/.zdir/+$(hostname)"
+ZSH_USER_ZALIAS=~/.zalias
+ZSH_USER_ZDIR=~/.zdir
+ZSH_HOST_ZDIR=~/.zdir/+$(hostname)
 
 PURE_PROMPT_SYMBOL='$'
 if [[ "$TERM" == "alacritty" ]]; then
@@ -180,7 +180,7 @@ autoload -U compinit
 compinit -d ~/.zcompdump
 
 # Sourcing External {{{1
-[[ -f "$ZSH_USER_ZALIASES" ]] && source "$ZSH_USER_ZALIASES"
+[[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
 [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 source_zdir_files "$ZSH_USER_ZDIR" "*.zsh"
