@@ -1,17 +1,39 @@
 # ~/.zshrc is loaded after ~/.zshenv and /etc/zshrc
 # vim: set ft=zsh fdm=marker:
+#
+# Add this line to enable profiling:
+#
+#   zmodload zsh/zprof
+#
 
-PURE_PROMPT_SYMBOL=''
-if [[ ! -z "$SSH_CLIENT" || ! -z "$SSH_CONNECTION" ]]; then
-    PURE_PROMPT_SYMBOL='$'
+ZSH_USER_ZALIASES="~/.zalias"
+ZSH_USER_ZDIR="~/.zdir"
+ZSH_HOST_ZDIR="~/.zdir/+$(hostname)"
+
+PURE_PROMPT_SYMBOL='$'
+if [[ "$TERM" == "alacritty" ]]; then
+    PURE_PROMPT_SYMBOL=''
 fi
 
-# Bugfixes {{{1
+# Functions {{{1
 
-unsetopt BG_NICE
+function source_zdir_files() {
+    local glob="$1"
 
-# Uncomment this line to enable profiling:
-#zmodload zsh/zprof
+    if [[ -d "$ZSH_USER_ZDIR" ]]; then
+        local globpath="$ZSH_USER_ZDIR/$glob"
+        for file in $~globpath(N); do
+            source "$file"
+        done
+    fi
+
+    if [[ -d "$ZSH_HOST_ZDIR" ]]; then
+        local globpath="$ZSH_HOST_ZDIR/$glob"
+        for file in $~globpath(N); do
+            source "$file"
+        done
+    fi
+}
 
 # Plugins {{{1
 ZPLUG_HOME=~/.local/opt/zplug
@@ -32,8 +54,13 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # Theme
 zplug 'mafredri/zsh-async'
 zplug 'sindresorhus/pure', use:pure.zsh, as:theme
+zstyle :prompt:pure:git:stash show yes
 
 zplug 'Tarrasch/zsh-autoenv'
+AUTOENV_FILE_ENTER=.autoenv.zsh
+AUTOENV_FILE_LEAVE=.autoenv.zsh
+AUTOENV_HANDLE_LEAVE=1
+
 zplug 'djui/alias-tips'
 
 zplug 'supercrabtree/k'
@@ -45,6 +72,8 @@ zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 
 zplug 'zsh-users/zsh-history-substring-search'
+
+source_zdir_files "$ZSH_USER_ZDIR" "*.zplug"
 
 if [[ $ZPLUG_INSTALL_NOW == true ]]; then
     # Install plugins if there are plugins that have not been installed
@@ -62,6 +91,8 @@ unset ZPLUG_INSTALL_NOW
 
 # Options {{{1
 
+# fix certain types of bugs occurring
+unsetopt BG_NICE
 # no c-s/c-q output freezing
 setopt noflowcontrol
 # allow expansion in prompts
@@ -149,16 +180,10 @@ autoload -U compinit
 compinit -d ~/.zcompdump
 
 # Sourcing External {{{1
-[[ -f ~/.zalias ]] && source ~/.zalias
+[[ -f "$ZSH_USER_ZALIASES" ]] && source "$ZSH_USER_ZALIASES"
 [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-if [[ -d ~/.zdir ]]; then
-    for file in ~/.zdir/*.zsh; do
-        [[ -f "$file" ]] && source "$file"
-    done
-    if [[ -d "~/.zdir/+$(hostname)" ]]; then
-        for file in ~/.zdir/+$(hostname)/*.zsh; do
-            [[ -f "$file" ]] && source "$file"
-        done
-    fi
-fi
+source_zdir_files "$ZSH_USER_ZDIR" "*.zsh"
+
+# Clean up {{{1
+unset source_zdir_files
