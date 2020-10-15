@@ -1,6 +1,8 @@
+# ~/.dircolors
+# vim: set ft=dircolors:
+#
 # Configuration file for dircolors, a utility to help you set the
 # LS_COLORS environment variable used by GNU ls with the --color option.
-# vim: set ft=dircolors:
 #
 
 TERM Eterm
@@ -65,176 +67,212 @@ NORMAL  00
 FILE    00
 DIR     01;34
 LINK    01;36   # soft link
-EXEC    01;32   # executable file
+EXEC    01;33   # executable file
 DOOR    01;35
 SOCK    01;35   # socket
 FIFO    01;35   # named pipe (fifo)
-BLK     01;33   # block device special (like /dev/sda)
-CHR     01;33   # character special (like /dev/tty0)
+BLK     01;32   # block device special (like /dev/sda)
+CHR     01;32   # character special (like /dev/tty0)
 ORPHAN  01;31
 
 # esoteric/extra defaults
-MULTIHARDLINK 01;37
-#SETUID 37;41
-#SETGID 30;43
-#STICKY_OTHER_WRITABLE 30;42
-#OTHER_WRITABLE 34;42
-#STICKY 37;44
-#CAPABILITY 30;41
+MULTIHARDLINK           01;37
+SETUID                  37;41
+SETGID                  30;43
+STICKY_OTHER_WRITABLE   30;42
+OTHER_WRITABLE          34;42
+STICKY                  37;44
+CAPABILITY              30;41
 
 # reserved bold:
 #   01;3[123456]
 
+# ---------------------------- #
+
 # archives or compressed
-.7z   00;31
-.Z    00;31
-.ace  00;31
-.arj  00;31
-.bz   00;31
-.bz2  00;31
-.cpio 00;31
-.deb  00;31
-.dz   00;31
-.gz   00;31
-.jar  00;31
-.lzh  00;31
-.lzma 00;31
-.rar  00;31
-.rpm  00;31
-.rz   00;31
-.svgz 00;31
-.tar  00;31
-.taz  00;31
-.tbz2 00;31
-.tgz  00;31
-.tz   00;31
-.xz   00;31
-.z    00;31
-.zip  00;31
-.zoo  00;31
+.7z     00;31
+.Z      00;31
+.ace    00;31
+.arj    00;31
+.bz     00;31
+.bz2    00;31
+.cpio   00;31
+.deb    00;31
+.dz     00;31
+.gz     00;31
+.img    00;31
+.jar    00;31
+.lzh    00;31
+.lzma   00;31
+.rar    00;31
+.rpm    00;31
+.rz     00;31
+.tar    00;31
+.taz    00;31
+.tbz2   00;31
+.tgz    00;31
+.tz     00;31
+.xz     00;31
+.z      00;31
+.zip    00;31
+.zoo    00;31
+.zst    00;31
 
 # images
-.asf  00;32
-.bmp  00;32
-.dl   00;32
-.flc  00;32
-.fli  00;32
-.gif  00;32
-.gl   00;32
-.ico  00;32
-.jpeg 00;32
-.jpg  00;32
-.mng  00;32
-.nuv  00;32
-.ogm  00;32
-.pbm  00;32
-.pcx  00;32
-.pgm  00;32
-.png  00;32
-.ppm  00;32
-.qt   00;32
-.rm   00;32
-.rmvb 00;32
-.svg  00;32
-.tga  00;32
-.tif  00;32
-.tiff 00;32
-.xbm  00;32
-.xcf  00;32
-.xpm  00;32
-.xwd  00;32
-.yuv  00;32
+.asf    00;35
+.bmp    00;35
+.dl     00;35
+.flc    00;35
+.fli    00;35
+.gif    00;35
+.gl     00;35
+.ico    00;35
+.jpeg   00;35
+.jpg    00;35
+.mng    00;35
+.nuv    00;35
+.ogm    00;35
+.pbm    00;35
+.pcx    00;35
+.pgm    00;35
+.png    00;35
+.ppm    00;35
+.qt     00;35
+.rm     00;35
+.rmvb   00;35
+.svg    00;35
+.svgz   00;35
+.tga    00;35
+.tif    00;35
+.tiff   00;35
+.xbm    00;35
+.xcf    00;35
+.xpm    00;35
+.xwd    00;35
+.yuv    00;35
 
 # video
-.avi  00;35
-.dv   00;35
-.flv  00;35
-.m2v  00;35
-.m4v  00;35
-.mkv  00;35
-.mov  00;35
-.mp4v 00;35
-.mpeg 00;35
-.mpg  00;35
-.mp4  00;35
-.vob  00;35
-.webm 00;35
-.wmv  00;35
+.avi    00;35
+.dv     00;35
+.flv    00;35
+.m2v    00;35
+.m4v    00;35
+.mkv    00;35
+.mov    00;35
+.mp4v   00;35
+.mpeg   00;35
+.mpg    00;35
+.mp4    00;35
+.vob    00;35
+.webm   00;35
+.wmv    00;35
 
 # audio
-.aax  00;36
-.aac  00;36
-.au   00;36
-.flac 00;36
-.mid  00;36
-.midi 00;36
-.mka  00;36
-.mp3  00;36
-.m4a  00;36
-.m4b  00;36
-.mpc  00;36
-.ogg  00;36
-.ra   00;36
-.wav  00;36
-.opus 00;36
+.aax    00;35
+.aac    00;35
+.au     00;35
+.flac   00;35
+.mid    00;35
+.midi   00;35
+.mka    00;35
+.mp3    00;35
+.m4a    00;35
+.m4b    00;35
+.mpc    00;35
+.ogg    00;35
+.ra     00;35
+.wav    00;35
+.opus   00;35
 
 # source code
-.d    00;33
-.c    00;33
-.cc   00;33
-.cpp  00;33
-.cxx  00;33
-.i    00;33
-.ii   00;33
-.ipp  00;33
-.ixx  00;33
-.h    00;33
-.hh   00;33
-.hpp  00;33
-.hxx  00;33
-.py   00;33
-.sh   00;33
-.bash 00;33
-.zsh  00;33
-.vim  00;33
-.hs   00;33
-.pl   00;33
-.rs   00;33
-.go   00;33
-.tex  00;33
+.bash   00;32
+.c      00;32
+.cc     00;32
+.cpp    00;32
+.cxx    00;32
+.d      00;32
+.go     00;32
+.h      00;32
+.hh     00;32
+.hpp    00;32
+.hs     00;32
+.hxx    00;32
+.i      00;32
+.ii     00;32
+.ipp    00;32
+.ixx    00;32
+.pl     00;32
+.py     00;32
+.rs     00;32
+.sh     00;32
+.tex    00;32
+.vim    00;32
+.zsh    00;32
 
-# objects
-.a    03;34
-.ko   03;34
-.o    03;34
-.gch  03;34
-.so   03;34
-.pyc  03;34
-.pyo  03;34
-.s    03;34
-.zwc  03;34
+# data files
+.conf   00;32
+.csv    00;32
+.ini    00;32
+.json   00;32
+.toml   00;32
+.xml    00;32
+.yaml   00;32
+.yml    00;32
 
 # web source code
-.html 00;33
-.htm  00;33
-.php  00;33
-.js   00;33
-.css  00;33
-.scss 00;33
-.inc  00;33
-.xml  00;33
-.sql  00;33
-.pgsql 00;33
+.html   00;32
+.htm    00;32
+.php    00;32
+.js     00;32
+.css    00;32
+.scss   00;32
+.inc    00;32
+.xml    00;32
+.sql    00;32
+.pgsql  00;32
+
+# generated objects
+.a      03;34
+.ko     03;34
+.o      03;34
+.gch    03;34
+.so     03;34
+.pyc    03;34
+.pyo    03;34
+.s      03;34
+.zwc    03;34
 
 # temporary files
-.tmp  03;37
-.temp 03;37
-.bak  03;37
-.swp  03;37
-.log  03;37
-.aux  03;37
-.out  03;37
+.tmp    03;37
+.temp   03;37
+.bak    03;37
+.swp    03;37
+.log    03;37
+.aux    03;37
+.out    03;37
+
+# documents
+.md     00
+.rst    00
+.txt    00
+.pdf    00
+.doc    00
+
+# ---------------------------- #
+
+# docker
+*Dockerfile     00;32
+*Dockerfile.*   00;32
+
+# make
+*Makefile       00;32
+*Makefile.*     00;32
+*.mk            00;32
+
+# cmake
+*CMakeLists.txt 00;32
+.cmake          00;32
 
 # pacman files
-.pacnew  03;35
-.pacsave 03;38
+.pacnew         03;35
+.pacsave        03;37
