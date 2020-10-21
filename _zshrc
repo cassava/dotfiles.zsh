@@ -183,7 +183,7 @@ compinit -d ~/.zcompdump
 [[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
 [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-source_zdir_files "$ZSH_USER_ZDIR" "*.zsh"
+source_zdir_files "*.zsh"
 
 # Clean up {{{1
 unset source_zdir_files
