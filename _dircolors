@@ -129,6 +129,8 @@ CAPABILITY              30;41
 .ico    00;35
 .jpeg   00;35
 .jpg    00;35
+.heic   00;35
+.heif   00;35
 .mng    00;35
 .nuv    00;35
 .ogm    00;35
