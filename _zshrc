@@ -73,7 +73,7 @@ zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 
 zplug 'zsh-users/zsh-history-substring-search'
 
-source_zdir_files "$ZSH_USER_ZDIR" "*.zplug"
+source_zdir_files "*.zplug"
 
 if [[ $ZPLUG_INSTALL_NOW == true ]]; then
     # Install plugins if there are plugins that have not been installed
