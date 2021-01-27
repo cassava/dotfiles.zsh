@@ -13,6 +13,8 @@ alias du='du -h'
 alias df='df -h'
 alias lsblk='lsblk -o NAME,RM,SIZE,RO,TYPE,MOUNTPOINT,UUID'
 
+function vimz() { vim "$(which "$1")" }
+
 # Other than ls...
 alias ll='ls -lbhCF --color=auto'
 alias la='ls -abhCF --color=auto'
