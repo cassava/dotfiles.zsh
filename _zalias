@@ -13,7 +13,11 @@ alias du='du -h'
 alias df='df -h'
 alias lsblk='lsblk -o NAME,RM,SIZE,RO,TYPE,MOUNTPOINT,UUID'
 
+# Vim aliases
 function vimz() { vim "$(which "$1")" }
+alias vimc="nvim ~/.config/nvim/init.vim"
+alias vimr="nvim +Renamer"
+alias vimg="nvim +GhostStart"
 
 # Other than ls...
 alias ll='ls -lbhCF --color=auto'
@@ -25,12 +29,10 @@ alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir -p'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
-alias nvim-config='nvim ~/.config/nvim/init.vim'
 
 # Program replacements
 alias R="R --no-save"
 alias xclip="xclip -selection clipboard"
-alias vat="vcsh"
 
 # Filetype Aliases
 alias -s jar="/usr/bin/java -jar"
