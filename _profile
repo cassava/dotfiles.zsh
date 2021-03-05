@@ -12,11 +12,12 @@ export LESS="-AFIRs"
 export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH"
 
 # Go
-export GOPATH="$HOME/lang/go"
-export PATH="$GOPATH/bin:$PATH"
+export GOPATH="$HOME/.cache/go"
+export GOBIN="$HOME/.local/bin"
 
 # Rust
-export PATH="$HOME/.cargo/bin:$PATH"
+export CARGO_HOME="$HOME/.cache/cargo"
+export CARGO_INSTALL_ROOT="$HOME/.local/bin"
 if command -v rustc >/dev/null; then
     export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
