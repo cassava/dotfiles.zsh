@@ -11,12 +11,13 @@ ZSH_USER_ZDIR=~/.zdir
 ZSH_HOST_ZDIR=~/.zdir/+$(hostname)
 
 PURE_PROMPT_SYMBOL='$'
+PURE_PROMPT_VICMD_SYMBOL='<'
 if [[ "$TERM" == "alacritty" ]]; then
-    PURE_PROMPT_SYMBOL=''
+    PURE_PROMPT_SYMBOL=''        # U+F105
+    PURE_PROMPT_VICMD_SYMBOL=''  # U+F104
 fi
 
 # Functions {{{1
-
 function source_zdir_files() {
     local glob="$1"
 
@@ -48,8 +49,8 @@ if [[ ! -d $ZPLUG_HOME ]]; then
 fi
 source $ZPLUG_HOME/init.zsh
 
-# zplug should manage itself
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug 'jeffreytse/zsh-vi-mode'
 
 # Theme
 zplug 'mafredri/zsh-async'
@@ -64,8 +65,6 @@ AUTOENV_HANDLE_LEAVE=1
 zplug 'djui/alias-tips'
 
 zplug 'supercrabtree/k'
-
-zplug 'wfxr/forgit'
 
 zplug 'zsh-users/zsh-completions'
 zplug 'zsh-users/zsh-autosuggestions'
@@ -179,11 +178,13 @@ zstyle ':completion:*' use-cache true
 autoload -U compinit
 compinit -d ~/.zcompdump
 
-# Sourcing External {{{1
-[[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
-[[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-source_zdir_files "*.zsh"
+# Source External {{{1
+function zvm_after_init() {
+    [[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
+    [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+    source_zdir_files "*.zsh"
+}
 
 # Clean up {{{1
 unset source_zdir_files
