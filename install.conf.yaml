@@ -7,6 +7,13 @@
     - ~/.local/bin/
     - ~/.config/
 
+- shell:
+  - description: Rename .profile to .bash_profile if it is a file
+    command: >
+      test -f ~/.bash_profile ||
+      test -f ~/.profile      &&
+      mv ~/.profile ~/.bash_profile
+
 - link:
     ~/.dircolors: _dircolors
     ~/.inputrc: _inputrc
@@ -51,7 +58,7 @@
     stdout: true
     stderr: true
 
-# Ubuntu Bionic packages
+# Ubuntu Bionic/Focal packages
 - shell:
   - description: Install core packages (Arch)
     command: >
