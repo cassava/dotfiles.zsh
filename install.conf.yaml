@@ -40,7 +40,7 @@
   - description: Install core packages (Arch)
     command: >
       test -f /usr/bin/pacman  &&
-      sudo pacman -Sy --needed  \
+      sudo pacman -Sy --needed --noconfirm  \
         fasd                    \
         fd                      \
         git                     \
@@ -64,7 +64,7 @@
     command: >
       test -x /usr/bin/apt     &&
       sudo apt update          &&
-      sudo apt install          \
+      sudo apt install -y       \
         mc                      \
         ripgrep                 \
         silversearcher-ag       \
