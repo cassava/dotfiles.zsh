@@ -1,23 +1,23 @@
+# vim: set ft=sh:
+#
 # /etc/profile or ~/.profile is read once every login.
 # If you make any changes here, you will need to manually source the
 # file or log out and in again for them to take effect.
+#
 
+profile_dir="$HOME/.profile.d"
+
+# Set reasonable defaults
 export DE="xfce"
 export BROWSER="firefox"
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 export LESS="-AFIRs"
-
-# Local binaries
 export PATH="$HOME/.local/bin:$HOME/.local/sbin:$PATH"
 
-# Go
-export GOPATH="$HOME/.cache/go"
-export GOBIN="$HOME/.local/bin"
-
-# Rust
-export CARGO_HOME="$HOME/.cache/cargo"
-export CARGO_INSTALL_ROOT="$HOME/.local/bin"
-if command -v rustc >/dev/null; then
-    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+# Source user profile files
+if [[ -d ${profile_dir} ]]; then
+    for file in ${profile_dir}/*.{zsh,sh}; do
+        source "$file"
+    done
 fi

@@ -1,0 +1,5 @@
+export LANG=en_US.UTF-8
+export LC_MONETARY=de_DE.UTF-8
+export LC_PAPER=de_DE.UTF-8
+export LC_TELEPHONE=de_DE.UTF-8
+export LC_MEASUREMENT=de_DE.UTF-8

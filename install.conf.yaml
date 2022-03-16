@@ -5,7 +5,8 @@
 - clean:
     - ~/
     - ~/.local/bin/
-    - ~/.config/
+    - ~/.profile.d/
+    - ~/.zdir/
 
 - shell:
   - description: Rename .profile to .bash_profile if it is a file
@@ -17,23 +18,23 @@
 - link:
     ~/.dircolors: _dircolors
     ~/.inputrc: _inputrc
-    ~/.profile: _profile
-    ~/.tmux.conf: _tmux.conf
-    ~/.zalias: _zalias
-    ~/.zprofile: _zprofile
-    ~/.zshrc: _zshrc
-    ~/.zdir/:
-      path: _zdir/*
-      glob: true
-      create: true
-    ~/.config/:
-      path: _config/*
-      glob: true
-      create: true
     ~/.local/bin/:
       path: _local/bin/*
       glob: true
       create: true
+    ~/.profile: _profile
+    ~/.profile.d/:
+      path: _profile.d/*
+      glob: true
+      create: true
+    ~/.tmux.conf: _tmux.conf
+    ~/.zalias: _zalias
+    ~/.zdir/:
+      path: _zdir/*
+      glob: true
+      create: true
+    ~/.zprofile: _zprofile
+    ~/.zshrc: _zshrc
 
 # Arch Linux packages
 - shell:

@@ -33,6 +33,8 @@ alias rm='nocorrect rm'
 # Program replacements
 alias R="R --no-save"
 alias xclip="xclip -selection clipboard"
+alias feh="feh -."
+alias cat="bat"
 
 # Filetype Aliases
 alias -s jar="/usr/bin/java -jar"
@@ -58,3 +60,6 @@ alias sys="sudo systemctl"
 alias sysu="systemctl --user"
 alias sue="sudoedit"
 alias dotnow="dotbot -c install.conf.yaml"
+alias ynap-dkb="~/lang/ynap.rs/target/release/ynap -b ~/lang/ynap.rs/banks/dkb.yaml -r ~/.config/ynap/rules.yaml"
+alias ynap-vr="~/lang/ynap.rs/target/release/ynap -b ~/lang/ynap.rs/banks/vr.yaml -r ~/.config/ynap/rules.yaml"
+alias ynap-rules="vim ~/.config/ynap/rules.yaml"
