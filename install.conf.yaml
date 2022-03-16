@@ -4,6 +4,7 @@
 
 - clean:
     - ~/
+    - ~/.config/
     - ~/.local/bin/
     - ~/.profile.d/
     - ~/.zdir/
@@ -16,6 +17,10 @@
       mv ~/.profile ~/.bash_profile
 
 - link:
+    ~/.config/:
+      path: _config/*
+      glob: true
+      create: true
     ~/.dircolors: _dircolors
     ~/.inputrc: _inputrc
     ~/.local/bin/:
