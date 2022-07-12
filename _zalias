@@ -13,12 +13,6 @@ alias du='du -h'
 alias df='df -h'
 alias lsblk='lsblk -o NAME,RM,SIZE,RO,TYPE,MOUNTPOINT,UUID'
 
-# Vim aliases
-function vimz() { vim "$(which "$1")" }
-alias vimc="nvim ~/.config/nvim/init.vim"
-alias vimr="nvim +Renamer"
-alias vimg="nvim +GhostStart"
-
 # Other than ls...
 alias ll='ls -lbhCF --color=auto'
 alias la='ls -abhCF --color=auto'
@@ -29,12 +23,6 @@ alias cp='nocorrect cp'
 alias mkdir='nocorrect mkdir -p'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
-
-# Program replacements
-alias R="R --no-save"
-alias xclip="xclip -selection clipboard"
-alias feh="feh -."
-alias cat="bat"
 
 # Filetype Aliases
 alias -s jar="/usr/bin/java -jar"
@@ -60,6 +48,3 @@ alias sys="sudo systemctl"
 alias sysu="systemctl --user"
 alias sue="sudoedit"
 alias dotnow="dotbot -c install.conf.yaml"
-alias ynap-dkb="~/lang/ynap.rs/target/release/ynap -b ~/lang/ynap.rs/banks/dkb.yaml -r ~/.config/ynap/rules.yaml"
-alias ynap-vr="~/lang/ynap.rs/target/release/ynap -b ~/lang/ynap.rs/banks/vr.yaml -r ~/.config/ynap/rules.yaml"
-alias ynap-rules="vim ~/.config/ynap/rules.yaml"
