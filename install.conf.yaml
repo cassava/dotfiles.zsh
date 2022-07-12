@@ -1,6 +1,10 @@
 - defaults:
     link:
       relink: true
+    shell:
+      stdin: true
+      stdout: true
+      stderr: true
 
 - clean:
     - ~/
@@ -43,56 +47,22 @@
 
 # Arch Linux packages
 - shell:
-  - description: Install core packages (Arch)
-    command: >
-      test -f /usr/bin/pacman  &&
-      sudo pacman -Sy --needed --noconfirm  \
-        fasd                    \
-        fd                      \
-        git                     \
-        glances                 \
-        inetutils               \
-        mc                      \
-        ripgrep                 \
-        the_silver_searcher     \
-        tmate                   \
-        tmux                    \
-        tree                    \
-        zsh                     \
-      || true
-    stdin: true
-    stdout: true
-    stderr: true
+  - description: Install requirements (Arch)
+    command: |
+      if [ -x /usr/bin/pacman ]; then
+        sudo pacman -Sy --needed --noconfirm $(cat requirements.arch)
+      fi
 
-# Ubuntu Bionic/Focal packages
+# Ubuntu 20.04/22.04 packages
 - shell:
-  - description: Install core packages (Arch)
-    command: >
-      test -x /usr/bin/apt     &&
-      sudo apt update          &&
-      sudo apt install -y       \
-        mc                      \
-        ripgrep                 \
-        silversearcher-ag       \
-        fasd                    \
-        fd-find                 \
-        inetutils-tools         \
-        inetutils-ping          \
-        inetutils-telnet        \
-        glances                 \
-        tree                    \
-        tmate                   \
-        tmux                    \
-        zsh                     \
-      || true
-    stdin: true
-    stdout: true
-    stderr: true
+  - description: Install requirements (Ubuntu)
+    command: |
+      if [ -x /usr/bin/apt ]; then
+        sudo apt update
+        sudo apt install -y $(cat requirements.ubuntu)
+      fi
 
 # Check that locales are available
 - shell:
   - description: Assert all locales are available
     command: _local/bin/check-locales --generate --auto-fix
-    stdin: true
-    stdout: true
-    stderr: true
