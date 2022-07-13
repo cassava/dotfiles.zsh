@@ -10,13 +10,6 @@ ZSH_USER_ZALIAS=~/.zalias
 ZSH_USER_ZDIR=~/.zdir
 ZSH_HOST_ZDIR=~/.zdir/+$(hostname)
 
-PURE_PROMPT_SYMBOL='$'
-PURE_PROMPT_VICMD_SYMBOL='<'
-if [[ "$TERM" == "alacritty" ]]; then
-    PURE_PROMPT_SYMBOL=''        # U+F105
-    PURE_PROMPT_VICMD_SYMBOL=''  # U+F104
-fi
-
 # Functions {{{1
 function source_zdir_files() {
     local glob="$1"
@@ -36,156 +29,106 @@ function source_zdir_files() {
     fi
 }
 
-# Plugins {{{1
-ZPLUG_HOME=~/.local/opt/zplug
-ZPLUG_USE_CACHE=true
-ZPLUG_CACHE_DIR=~/.cache/zplug
-ZPLUG_INSTALL_NOW=false
-
-if [[ ! -d $ZPLUG_HOME ]]; then
-    mkdir -p $(dirname $ZPLUG_HOME)
-    git clone https://github.com/zplug/zplug $ZPLUG_HOME
-    ZPLUG_INSTALL_NOW=true
-fi
-source $ZPLUG_HOME/init.zsh
-
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug 'jeffreytse/zsh-vi-mode'
-
-# Theme
-zplug 'mafredri/zsh-async'
-zplug 'sindresorhus/pure', use:pure.zsh, as:theme
-zstyle :prompt:pure:git:stash show yes
-
-zplug 'Tarrasch/zsh-autoenv'
-AUTOENV_FILE_ENTER=.autoenv.zsh
-AUTOENV_FILE_LEAVE=.autoenv.zsh
-AUTOENV_HANDLE_LEAVE=1
-
-zplug 'djui/alias-tips'
-
-zplug 'supercrabtree/k'
-
-zplug 'zsh-users/zsh-completions'
-zplug 'zsh-users/zsh-autosuggestions'
-zplug 'zsh-users/zsh-syntax-highlighting', defer:2
-
-zplug 'zsh-users/zsh-history-substring-search'
-
-source_zdir_files "*.zplug"
-
-if [[ $ZPLUG_INSTALL_NOW == true ]]; then
-    # Install plugins if there are plugins that have not been installed
-    if ! zplug check --verbose; then
-        printf "Install? [y/N]: "
-        if read -q; then
-            echo; zplug install
-        fi
-    fi
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load
-unset ZPLUG_INSTALL_NOW
+# Environment {{{1
+typeset -U PATH path        # Remove duplicates from array.
+typeset -U CDPATH cdpath
+typeset -U FPATH fpath
+typeset -U MANPATH manpath
 
 # Options {{{1
+#
+# For help on these options, see: man zshoptions
+# The options are arranged in the order of the man page.
+#
 
-# fix certain types of bugs occurring
-unsetopt BG_NICE
-# no c-s/c-q output freezing
-setopt noflowcontrol
-# allow expansion in prompts
-setopt prompt_subst
-# this is default, but set for share_history
-setopt append_history
-# save each command's beginning timestamp and the duration to the history file
-setopt extended_history
-# display PID when suspending processes as well
-setopt longlistjobs
-# try to avoid the 'zsh: no matches found...'
-setopt nonomatch
-# report the status of backgrounds jobs immediately
-setopt notify
-# whenever a command completion is attempted, make sure the entire command path
-# is hashed first.
-setopt hash_list_all
-# not just at the end
-setopt completeinword
-# use zsh style word splitting
-setopt noshwordsplit
-# allow use of comments in interactive code
-setopt interactivecomments
-# in order to use #, ~ and ^ for filename generation grep word
-# *~(*.gz|*.bz|*.bz2|*.zip|*.Z) -> searches for word not in compressed files
-# don't forget to quote '^', '~' and '#'!
-setopt noextended_glob
-# don't error out when unset parameters are used
-setopt unset
-# don't ever correct spellin errors please
-setopt nocorrect
-# watch for everyone but me and root
-watch=(notme root)
-# automatically remove duplicates from these arrays
-typeset -U path cdpath fpath manpath
-# import new commands from the history file also in other zsh-session
-setopt share_history
-# If a new command line being added to the history list duplicates an older
-# one, the older command is removed from the list
-setopt histignorealldups
-# remove command lines from the history list when the first character on the
-# line is a space
-setopt histignorespace
-
-# Don't send SIGHUP to background processes when the shell exits.
-setopt nohup
-# avoid "beep"ing
-setopt nobeep
-# make cd push the old directory onto the directory stack.
-#setopt auto_pushd
-# don't push the same dir twice.
-#setopt pushd_ignore_dups
-# * shouldn't match dotfiles. ever.
-setopt noglobdots
-# Better umask
-umask 022
-
-# Environment {{{1
-export HISTFILE="$HOME/.zhistory"
-export HISTSIZE=10000
-export SAVEHIST=10000
-export EDITOR=vim
-export PAGER=less
-export MAIL="/var/mail/$USER"
-#export REPORTTIME=60
+# :Changing Directories: {{{2
+setopt AUTO_PUSHD           # Automatically call pushd when using cd.
+setopt PUSHD_IGNORE_DUPS    # Don't push multiple copies of the same directory.
 export DIRSTACKSIZE=20
 export DIRSTACKFILE=$HOME/.zdirstack
 
-# Keybindings {{{1
+# :Completion: {{{2
+setopt COMPLETE_IN_WORD     # Complete inside words instead of jumping to the end.
 
-# Emacs
-bindkey -e
+# :Expansion and Globbing: {{{2
+setopt NO_EXTENDED_GLOB     # Do not treat the `#`, `~` and `^` as patterns for globbing.
+setopt NO_GLOB_DOTS         # Require a leading `.` in a filename to match hidden files.
+setopt MARK_DIRS            # Append a trailing `/` to all directories from globs.
 
-# Let me edit a command in my $EDITOR, as in bash:
-autoload -z edit-command-line
-zle -N edit-command-line
-bindkey "^X^E" edit-command-line
-bindkey "\e." insert-last-word
+# :History: {{{2
+setopt APPEND_HISTORY       # Append history to the history file. [default]
+setopt EXTENDED_HISTORY     # Save `: timestamp:duration;` for each history item.
+setopt HIST_FCNTL_LOCK      # Use more efficient locking available on modern systems.
+setopt HIST_IGNORE_ALL_DUPS # Remove older duplicate entries when appending an entry.
+setopt HIST_IGNORE_SPACE    # Don't append to history if command starts with a space.
+setopt HIST_NO_STORE        # Don't append `history` command to history.
+setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks from commands added to history.
+setopt SHARE_HISTORY        # Import new commands from the history file.
+export HISTFILE="$HOME/.zhistory"
+export HISTSIZE=10000
+export SAVEHIST=10000
 
+# :Input / Output: {{{2
+setopt NO_CORRECT           # Don't ever correct what I write. [default]
+setopt NO_FLOW_CONTROL      # Disable ^S/^Q output flow control keybindings.
+setopt INTERACTIVE_COMMENTS # Allow comments even in interactive shells.
+setopt HASH_CMDS            # Remember location of command after first-use. [default]
+umask 022                   # Ensure default permissions are 755 and 644 respectively.
+
+# :Job Control: {{{2
+setopt NO_BG_NICE           # Do not run background jobs at lower priority.
+setopt LONG_LIST_JOBS       # Print job notifications in the long format.
+
+# :Prompting: {{{2
+setopt PROMPT_SUBST         # Allow param, command and arithmetic expansion in prompts.
+export REPORTTIME=10        # Seconds after which to print running time of commands.
+watch=(notme root)          # Watch for everyone but me and root.
+
+# :Zle: {{{2
+setopt NO_BEEP              # Do not beep on error in ZLE.
+
+# :Keybindings: {{{2
+bindkey -e                  # Use emacs keybindings by default.
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-# Completions {{{1
-zstyle ':completion:*' use-cache true
-autoload -U compinit
-compinit -d ~/.zcompdump
+# Plugins {{{1
+#
+# Plugins are defined in ~/.zimrc and options in ~/.zimenv
+# See: https://github.com/zimfw/zimfw
+#
+ZIM_HOME=~/.local/opt/zim
+ZIM_ENV=~/.zimenv
+
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  echo "Installing zim:fw ..."
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  echo "Updating zim:fw modules ..."
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+
+source ${ZIM_ENV}
+source ${ZIM_HOME}/init.zsh
 
 # Source External {{{1
+#
+# This needs to happen after zsh-vi-mode plugin is loaded.
+# That's why it's wrapped in here.
+#
 function zvm_after_init() {
+    bindkey '\e.' insert-last-word
+
     [[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
     [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
     source_zdir_files "*.zsh"
 }
 
-# Clean up {{{1
+# Clean Up {{{1
 unset source_zdir_files

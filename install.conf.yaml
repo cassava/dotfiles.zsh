@@ -44,6 +44,8 @@
       create: true
     ~/.zprofile: _zprofile
     ~/.zshrc: _zshrc
+    ~/.zimrc: _zimrc
+    ~/.zimenv: _zimenv
 
 # Arch Linux packages
 - shell:
