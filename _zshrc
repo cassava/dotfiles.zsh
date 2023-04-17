@@ -89,8 +89,6 @@ setopt NO_BEEP              # Do not beep on error in ZLE.
 
 # :Keybindings: {{{2
 bindkey -e                  # Use emacs keybindings by default.
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 
 # Plugins {{{1
 #
@@ -124,10 +122,19 @@ source ${ZIM_HOME}/init.zsh
 function zvm_after_init() {
     bindkey '\e.' insert-last-word
 
+    # Up and Down navigate the directory history
+    bindkey '^[[A' directory-history-search-forward
+    bindkey '^[[B' directory-history-search-backward
+
+    # Shift+Up and Down navigate the global history
+    bindkey '^[[1;2A' history-substring-search-up
+    bindkey '^[[1;2B' history-substring-search-down
+
     [[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
     [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
     source_zdir_files "*.zsh"
+
 }
 
 # Clean Up {{{1

@@ -11,6 +11,6 @@ zmodule djui/alias-tips
 zmodule supercrabtree/k
 zmodule zsh-users/zsh-completions
 zmodule zsh-users/zsh-autosuggestions
-zmodule zsh-users/zsh-history-substring-search
+zmodule tymm/zsh-directory-history --source directory-history.plugin.zsh
 zmodule completion
 zmodule zsh-users/zsh-syntax-highlighting
