@@ -9,7 +9,7 @@ profile_dir="$HOME/.profile.d"
 
 # Set reasonable defaults
 export DE="xfce"
-export BROWSER="firefox"
+export BROWSER="microsoft-edge"
 export EDITOR="nvim"
 export PAGER="less"
 export TERMINAL="alacritty"
