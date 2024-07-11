@@ -130,11 +130,14 @@ function zvm_after_init() {
     bindkey '^[[1;2A' history-substring-search-up
     bindkey '^[[1;2B' history-substring-search-down
 
+    autoload -z edit-command-line
+    zle -N edit-command-line
+    bindkey "^X^E" edit-command-line
+
     [[ -f "$ZSH_USER_ZALIAS" ]] && source "$ZSH_USER_ZALIAS"
     [[ -f ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
     source_zdir_files "*.zsh"
-
 }
 
 # Clean Up {{{1
