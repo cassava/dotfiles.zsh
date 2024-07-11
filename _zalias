@@ -3,6 +3,7 @@
 #
 # This file contains extra alias definitions for the interactive Zsh
 # and can be sourced by .zshrc
+#
 
 # Aliases redefining commands
 alias ls='ls -bhCF --color=auto'
@@ -50,3 +51,5 @@ alias sysu="systemctl --user"
 alias sue="sudoedit"
 alias dotnow="dotbot -c install.conf.yaml"
 alias vimi="nvim ~/.config/nvim/init.lua"
+
+function cdz() { cd $(git rev-parse --show-toplevel) }
